@@ -237,36 +237,53 @@ It pushes `"/bin/ls"`, builds `argv = { "/bin/ls", NULL }`, sets `envp = NULL`, 
 The `syscall` instruction remains in `.text`. No RWX allocations, no runtime code emission. The stealth comes from data indirection and XOR. Static scanners see fewer obvious constants, but the runtime rhythm is stable and detectable.
 
 What attackers gain
-• fewer obvious constants in `.text`
-• a layer of indirection that breaks naive pattern scans
+
+• fewer obvious constants in `.text`.
+
+• a layer of indirection that breaks naive pattern scans.
+
 
 What they pay
-• a fixed 64-bit key in the binary
-• a tiny data layout that can be recognized
-• a repeatable decode-then-use rhythm around `RAX` and `syscall`
+
+• a fixed 64-bit key in the binary.
+
+• a tiny data layout that can be recognized.
+
+• a repeatable decode-then-use rhythm around `RAX` and `syscall`.
 
 ## Detection that works in practice
 
 Static hints
-• small wrappers that read a byte from `.data`, XOR with a single-byte immediate, index a table of qwords, XOR the qword with a fixed 64-bit immediate, then end with `syscall; ret`
-• presence of a very small map table and a small array of qwords near a constant 64-bit key
+
+• small wrappers that read a byte from `.data`, XOR with a single-byte immediate, index a table of qwords, XOR the qword with a fixed 64-bit immediate, then end with `syscall; ret`.
+
+• presence of a very small map table and a small array of qwords near a constant 64-bit key.
 
 Runtime hints
-• repeated syscalls from the same tiny wrapper addresses in `.text`
-• immediate reads from a small `.data` area just before each syscall
-• a qword load followed by a 64-bit XOR immediate, then a syscall using the result in `RAX`
-• correlation with I/O or process creation that follows the wrappers
+
+• repeated syscalls from the same tiny wrapper addresses in `.text`.
+
+• immediate reads from a small `.data` area just before each syscall.
+
+• a qword load followed by a 64-bit XOR immediate, then a syscall using the result in `RAX`.
+
+• correlation with I/O or process creation that follows the wrappers.
 
 Hunting ideas
-• record the instruction pointer on `sys_enter` and group by small wrapper addresses
-• look back a few instructions for reads from a small `.data` region and a 64-bit XOR immediate before `syscall`
-• correlate with file writes to new paths or with `execve` into common utilities like `/bin/ls`
+
+• record the instruction pointer on `sys_enter` and group by small wrapper addresses.
+
+• look back a few instructions for reads from a small `.data` region and a 64-bit XOR immediate before `syscall`.
+
+• correlate with file writes to new paths or with `execve` into common utilities like `/bin/ls`.
 
 ## macOS specifics relevant to this code
 
-• syscall number goes in `RAX` and uses the macOS numbering such as `0x2000004` for `write`
-• arguments follow the usual x86-64 macOS syscall convention in registers
-• no JIT entitlement is necessary for this static pattern because it does not create executable pages at runtime
+• syscall number goes in `RAX` and uses the macOS numbering such as `0x2000004` for `write`.
+
+• arguments follow the usual x86-64 macOS syscall convention in registers.
+
+• no JIT entitlement is necessary for this static pattern because it does not create executable pages at runtime.
 
 Related note on JIT and entitlements
 If you were dynamically generating code, macOS Hardened Runtime expects proper signing with the JIT entitlement and use of `MAP_JIT` plus `pthread_jit_write_protect_np` to flip between write and execute. That is out of scope here, but it matters for defenders because legitimate JITs have a distinct telemetry shape compared to static patterns like this.
@@ -276,13 +293,17 @@ If you were dynamically generating code, macOS Hardened Runtime expects proper s
 Legitimate software that decodes tables at runtime exists, but the decode-then-use directly into `RAX` for `syscall` is a strong tell.
 
 Ideas
-• treat signed system runtimes and known JIT processes differently
-• require at least two strong signals together, for example decode-then-use plus file write or process creation
-• consider short time windows so a tight decode-then-syscall pattern is not lost in background noise
+
+• treat signed system runtimes and known JIT processes differently.
+
+• require at least two strong signals together, for example decode-then-use plus file write or process creation.
+
+• consider short time windows so a tight decode-then-syscall pattern is not lost in background noise.
 
 ## Short FAQ
 
-Does this require JIT entitlements
+Does this require JIT entitlements?
+
 No. The sample executes `syscall` from `.text` and does not allocate or execute from RWX memory.
 
 What breaks the stealth here
