@@ -8,7 +8,7 @@ image: "/assets/jscript/2h8x90.jpg"
 ---
 
 > **Security notice**  
-> 100% defensive post. Examples are **neutralized** (they do **not** execute payloads). The extractor **does not execute** code — it only locates and decodes `////` marked blobs for offline analysis.
+> 100% defensive post. Examples are **neutralized** (they do **not** execute payloads). The extractor **does not execute** code, it only locates and decodes `////` marked blobs for offline analysis.
 
 ## Context (why this matters for hosting)
 
