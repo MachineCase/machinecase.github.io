@@ -249,5 +249,3 @@ Deriving keys from uptime with splits in the binary is an elegant obfuscation tr
 * instrumentation able to correlate reads and hashing,
 * static scanning for overlays and high entropy,
 * and, when necessary, defender brute-force within plausible windows.
-
----
