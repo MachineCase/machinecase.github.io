@@ -6,7 +6,6 @@ tags: [XOR, Environmental Keying, Detection, YARA]
 image: "/assets/xor/xor.jpg"
 ---
 
-> **Security notice**
 > This article is 100% defensive and academic. Code examples are **neutralized** for analysis and detection, they do not show or execute payloads. The goal is to explain the technique, show weaknesses and offer actionable heuristics to hunt and prevent this family of attacks.
 
 ## Quick summary
