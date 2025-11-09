@@ -7,7 +7,7 @@ image: "/assets/xor/xor.jpg"
 ---
 
 > **Security notice**
-> This article is 100% defensive and academic. Code examples are **neutralized** for analysis and detection — they do not show or execute payloads. The goal is to explain the technique, show weaknesses and offer actionable heuristics to hunt and prevent this family of attacks.
+> This article is 100% defensive and academic. Code examples are **neutralized** for analysis and detection, they do not show or execute payloads. The goal is to explain the technique, show weaknesses and offer actionable heuristics to hunt and prevent this family of attacks.
 
 ## Quick summary
 
@@ -57,7 +57,7 @@ Defender benefit:
 
 ## Three practical schemes (conceptual)
 
-### Scheme A — `seed_hi` + `seed_lo` XOR with uptime → hash
+### Scheme A: `seed_hi` + `seed_lo` XOR with uptime → hash
 
 * Binary stores `seed_hi` (8 bytes) at the beginning and `seed_lo` (8 bytes) at the end.
 * Runtime:
@@ -66,13 +66,13 @@ Defender benefit:
   * `buf = (seed_hi XOR u) || (seed_lo XOR u)`  → `hash = SHA256(buf)` → `K = hash[:16]`
 * Tradeoff: simple, but if `u` is predictable it suffices to test time windows.
 
-### Scheme B — store half the key and recompute the other half
+### Scheme B: store half the key and recompute the other half
 
 * Binary stores `K_partA` (8 bytes) at the start, computes `K_partB = SHA256(u || nonce)[:8]` at runtime.
 * `K = K_partA || K_partB`
 * Tradeoff: reduces workload for an attacker who already has `K_partA`; defender can brute-force `u` to recover `K_partB`.
 
-### Scheme C — `K = SHA256(seed || uptime || nonce)[:16]`
+### Scheme C: `K = SHA256(seed || uptime || nonce)[:16]`
 
 * Binary stores `seed` and `nonce` in distinct places; combines with uptime.
 * More robust if `seed` and `nonce` are secret; still vulnerable if `uptime` is the only unknown entropy.
