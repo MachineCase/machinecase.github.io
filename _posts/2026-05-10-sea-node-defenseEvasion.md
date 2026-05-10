@@ -178,7 +178,7 @@ WebSocket C2, Telegram session theft, LaunchAgent persistence.
 </div>
 
 <div style="display: flex; gap: 10px; justify-content: center;">
-  <img src="/assets/img/sea/info.png" style="width: 100%;">
-  <img src="/assets/img/sea/js.png" style="width: 100%;">
-  <img src="/assets/img/sea/analysis.png" style="width: 100%;">
+  <img src="/assets/img/sea/info.png" alt="SEA Analyzer - Info tab" style="width: 100%;">
+  <img src="/assets/img/sea/js.png" alt="SEA Analyzer - JavaScript tab" style="width: 100%;">
+  <img src="/assets/img/sea/analysis.png" alt="SEA Analyzer - Analysis tab" style="width: 100%;">
 </div>
