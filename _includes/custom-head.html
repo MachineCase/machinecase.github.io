@@ -1,91 +1,100 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-html[data-mode=dark],html:not([data-mode]){
---main-bg:#06080f;--mask-bg:rgba(6,8,15,.85);--main-border-color:rgba(0,255,180,.12);
---text-color:#9de8d4;--text-muted-color:#3d7a6e;--text-muted-highlight-color:#5aa89a;
---heading-color:#00ffcc;--label-color:#6abfb0;
---blockquote-border-color:rgba(0,255,180,.3);--blockquote-text-color:#3d7a6e;
---link-color:#00d4ff;--link-underline-color:rgba(0,212,255,.3);
---button-bg:#0a1020;--btn-border-color:rgba(0,255,180,.25);
---btn-backtotop-color:#00ffcc;--btn-backtotop-border-color:rgba(0,255,180,.25);
---card-header-bg:#0a1020;--checkbox-color:rgba(0,255,180,.4);--checkbox-checked-color:#00ffcc;
---img-bg:radial-gradient(circle,#06080f 0%,#0a1020 100%);
---shimmer-bg:linear-gradient(90deg,rgba(0,255,180,0) 0%,rgba(0,255,180,.04) 50%,rgba(0,255,180,0) 100%);
---site-title-color:#00ffcc;--site-subtitle-color:#3d7a6e;
---sidebar-bg:#040609;--sidebar-border-color:rgba(0,255,180,.15);
---sidebar-muted-color:#3d7a6e;--sidebar-active-color:#00ffcc;
---sidebar-hover-bg:rgba(0,255,180,.06);--sidebar-btn-bg:#0a1020;
---sidebar-btn-color:rgba(0,255,180,.5);--avatar-border-color:#00ffcc;
---topbar-bg:rgba(6,8,15,.88);--topbar-text-color:#9de8d4;
---search-border-color:rgba(0,255,180,.25);--search-icon-color:rgba(0,255,180,.4);
---input-focus-border-color:#00ffcc;
---post-list-text-color:#9de8d4;--btn-patinator-text-color:#9de8d4;--btn-paginator-hover-color:#0a1020;
---toc-highlight:#00ffcc;--toc-popup-border-color:rgba(0,255,180,.25);
---tag-hover:rgba(0,255,180,.08);
---tb-odd-bg:#080c18;--tb-even-bg:#06080f;--tb-border-color:rgba(0,255,180,.1);
---footnote-target-bg:rgba(0,255,180,.08);
---btn-share-color:#3d7a6e;--btn-share-hover-color:#00ffcc;
---card-bg:#0a1020;--card-hovor-bg:#0f1830;
---card-shadow:rgba(0,255,180,.07) 0 6px 18px 0,rgba(0,255,180,.18) 0 0 0 1px;
---kbd-wrap-color:rgba(0,255,180,.3);--kbd-text-color:#00ffcc;--kbd-bg-color:#0a1020;
---prompt-text-color:rgba(157,232,212,.75);
---prompt-tip-bg:rgba(0,255,180,.06);--prompt-tip-icon-color:#00ffcc;
---prompt-info-bg:rgba(0,212,255,.07);--prompt-info-icon-color:#00d4ff;
---prompt-warning-bg:rgba(255,204,0,.07);--prompt-warning-icon-color:#ffcc00;
---prompt-danger-bg:rgba(255,0,100,.07);--prompt-danger-icon-color:#ff0064;
---tag-border:rgba(0,255,180,.25);--tag-shadow:#040609;--dash-color:rgba(0,255,180,.2);
---search-tag-bg:#0a1020;--categories-border:rgba(0,255,180,.12);
---categories-hover-bg:#0f1830;--categories-icon-hover-color:#00ffcc;
---timeline-node-bg:#00ffcc;--timeline-color:rgba(0,255,180,.15);--timeline-year-dot-color:#06080f;
---language-border-color:rgba(0,255,180,.15);
---highlight-bg-color:#050810;--highlighter-rouge-color:#00ffcc;--highlight-lineno-color:#1a3830;
---inline-code-bg:rgba(0,255,180,.07);--code-color:#00e8b4;
---code-header-text-color:rgba(0,255,180,.45);--code-header-muted-color:#0f1830;
---code-header-icon-color:rgba(0,255,180,.3);
---clipboard-checked-color:#00ffcc;--filepath-text-color:#00d4ff;
+/* ── Base ─────────────────────────────────────────────────── */
+body{background-color:#08060f!important;color:#c4b8d8!important}
+#main-wrapper{background-color:#08060f}
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+#sidebar{background:#050308!important;border-right:1px solid rgba(157,0,255,.15)!important;position:fixed!important}
+#sidebar::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(157,0,255,.012) 2px,rgba(157,0,255,.012) 4px);z-index:0}
+
+#sidebar .site-title{
+  font-family:'Share Tech Mono',monospace!important;
+  color:#9d00ff!important;
+  font-size:1.45rem!important;
+  letter-spacing:2px!important;
+  text-shadow:0 0 12px rgba(157,0,255,.7),0 0 35px rgba(157,0,255,.3)!important;
+  font-weight:400!important;
+}
+#sidebar .site-subtitle{color:#5a4878!important;font-size:.8rem!important;letter-spacing:.5px!important}
+#sidebar a{color:#5a4878!important}
+#sidebar ul li.nav-item a.nav-link{color:#7a6898!important}
+#sidebar ul li.nav-item a.nav-link:hover{background-color:rgba(157,0,255,.08)!important;color:#b47fff!important}
+#sidebar ul li.nav-item.active .nav-link{color:#9d00ff!important;background-color:rgba(157,0,255,.1)!important;text-shadow:0 0 8px rgba(157,0,255,.5)!important}
+#sidebar #avatar{box-shadow:0 0 0 2px #9d00ff,0 0 18px rgba(157,0,255,.45)!important}
+#sidebar .sidebar-bottom a:hover{color:#9d00ff!important}
+
+/* ── Topbar ───────────────────────────────────────────────── */
+#topbar-wrapper{background-color:rgba(8,6,15,.92)!important;border-bottom:1px solid rgba(157,0,255,.15)!important}
+
+/* ── Typography ───────────────────────────────────────────── */
+h1,h2,h3,h4,h5{color:#d4b8ff!important}
+h1{text-shadow:0 0 14px rgba(157,0,255,.3)!important}
+h2,h3{text-shadow:0 0 8px rgba(157,0,255,.18)!important}
+a{color:#a855f7!important}
+.content a:not(.img-link):hover{color:#9d00ff!important;border-bottom-color:#9d00ff!important;text-shadow:0 0 6px rgba(157,0,255,.4)!important}
+
+/* ── Post cards ───────────────────────────────────────────── */
+.post-preview{
+  background:#0d0a16!important;
+  border:1px solid rgba(157,0,255,.15)!important;
+  box-shadow:none!important;
+  border-radius:12px!important;
+  transition:border-color .25s,box-shadow .25s!important;
+}
+.post-preview:hover{
+  border-color:rgba(157,0,255,.55)!important;
+  box-shadow:0 0 20px rgba(157,0,255,.12),0 0 0 1px rgba(157,0,255,.45)!important;
+}
+.card-title{color:#d4b8ff!important;font-weight:600!important}
+.post-meta,.card-text{color:#5a4878!important}
+#post-list .card{background:none!important;border:none!important}
+
+/* ── Tags ─────────────────────────────────────────────────── */
+.post-tag,.tag{
+  background:rgba(157,0,255,.08)!important;
+  border:1px solid rgba(157,0,255,.3)!important;
+  color:#a855f7!important;
+  border-radius:6px!important;
+}
+.post-tag:hover,.tag:hover{
+  background:rgba(157,0,255,.18)!important;
+  border-color:#9d00ff!important;
+  color:#d4b8ff!important;
+  text-shadow:0 0 6px rgba(157,0,255,.4)!important;
 }
 
-/* Glow effects */
-html[data-mode=dark] h1,html:not([data-mode]) h1{text-shadow:0 0 12px rgba(0,255,180,.35),0 0 30px rgba(0,255,180,.12)}
-html[data-mode=dark] h2,html[data-mode=dark] h3,html:not([data-mode]) h2,html:not([data-mode]) h3{text-shadow:0 0 8px rgba(0,255,180,.25)}
+/* ── Code ─────────────────────────────────────────────────── */
+code.highlighter-rouge{color:#c084fc!important;background:rgba(157,0,255,.07)!important;border:1px solid rgba(157,0,255,.2)!important}
+.highlight,.highlight .w{color:#c4b8d8!important;background-color:#07050e!important}
+div[class^=language-]{box-shadow:rgba(157,0,255,.2) 0 0 0 1px!important}
+.highlight .k,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .kv{color:#ff6ef7!important}
+.highlight .kd,.highlight .kt,.highlight .kc{color:#f472b6!important}
+.highlight .nf,.highlight .fm{color:#c084fc!important}
+.highlight .s,.highlight .s1,.highlight .s2,.highlight .sb,.highlight .sc,.highlight .dl{color:#a3e635!important}
+.highlight .c,.highlight .c1,.highlight .cm,.highlight .cs{color:#3d2d55!important}
+.highlight .m,.highlight .mi,.highlight .mf,.highlight .mh{color:#67e8f9!important}
+.highlight .na,.highlight .nc,.highlight .nn,.highlight .no{color:#fbbf24!important}
 
-html[data-mode=dark] #sidebar .site-title,html:not([data-mode]) #sidebar .site-title{
-  font-family:'Share Tech Mono',monospace;
-  text-shadow:0 0 10px rgba(0,255,180,.6),0 0 30px rgba(0,255,180,.25);
-  letter-spacing:1px;
-}
-html[data-mode=dark] #sidebar ul li.nav-item.active .nav-link,html:not([data-mode]) #sidebar ul li.nav-item.active .nav-link{text-shadow:0 0 8px rgba(0,255,180,.5)}
-html[data-mode=dark] .post-preview:hover,html:not([data-mode]) .post-preview:hover{box-shadow:rgba(0,255,180,.12) 0 8px 24px 0,rgba(0,255,180,.35) 0 0 0 1px!important}
-html[data-mode=dark] #sidebar #avatar,html:not([data-mode]) #sidebar #avatar{box-shadow:0 0 0 2px #00ffcc,0 0 14px rgba(0,255,180,.5)!important}
-html[data-mode=dark] code.highlighter-rouge,html:not([data-mode]) code.highlighter-rouge{color:#00ffcc;border:1px solid rgba(0,255,180,.2)}
+/* ── TOC & panel ──────────────────────────────────────────── */
+#toc-wrapper ul .is-active-link{color:#9d00ff!important;text-shadow:0 0 6px rgba(157,0,255,.4)!important}
+#panel-wrapper .panel-heading{color:#7a6898!important}
+#access-lastmod a{color:#a855f7!important}
 
-/* Scrollbar */
-html[data-mode=dark] ::-webkit-scrollbar,html:not([data-mode]) ::-webkit-scrollbar{width:4px;height:4px}
-html[data-mode=dark] ::-webkit-scrollbar-track,html:not([data-mode]) ::-webkit-scrollbar-track{background:#06080f}
-html[data-mode=dark] ::-webkit-scrollbar-thumb,html:not([data-mode]) ::-webkit-scrollbar-thumb{background:rgba(0,255,180,.3);border-radius:2px}
-html[data-mode=dark] ::-webkit-scrollbar-thumb:hover,html:not([data-mode]) ::-webkit-scrollbar-thumb:hover{background:rgba(0,255,180,.6)}
+/* ── Footer ───────────────────────────────────────────────── */
+footer{background-color:#08060f!important;border-top:1px solid rgba(157,0,255,.12)!important}
+footer a{color:#7a6898!important}
 
-html[data-mode=dark] #topbar-wrapper,html:not([data-mode]) #topbar-wrapper{border-bottom:1px solid rgba(0,255,180,.15)}
-html[data-mode=dark] #toc-wrapper ul .is-active-link,html:not([data-mode]) #toc-wrapper ul .is-active-link{text-shadow:0 0 6px rgba(0,255,180,.4)}
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:#08060f}
+::-webkit-scrollbar-thumb{background:rgba(157,0,255,.35);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(157,0,255,.65)}
 
-html[data-mode=dark] .post-tag:hover,html:not([data-mode]) .post-tag:hover{color:#00ffcc!important;border-color:rgba(0,255,180,.5)!important;text-shadow:0 0 6px rgba(0,255,180,.4)}
-html[data-mode=dark] .content a:not(.img-link):hover,html:not([data-mode]) .content a:not(.img-link):hover{color:#00ffcc!important;border-bottom-color:#00ffcc!important;text-shadow:0 0 6px rgba(0,255,180,.4)}
+/* ── Blockquote ───────────────────────────────────────────── */
+blockquote{border-left-color:rgba(157,0,255,.4)!important;color:#7a6898!important}
 
-/* Sidebar scanlines */
-html[data-mode=dark] #sidebar,html:not([data-mode]) #sidebar{position:relative}
-html[data-mode=dark] #sidebar::after,html:not([data-mode]) #sidebar::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,180,.015) 2px,rgba(0,255,180,.015) 4px);z-index:0}
-
-/* Syntax colors */
-html[data-mode=dark] .highlight,html[data-mode=dark] .highlight .w,html:not([data-mode]) .highlight,html:not([data-mode]) .highlight .w{color:#a8e6d4;background-color:#050810}
-html[data-mode=dark] .highlight .k,html[data-mode=dark] .highlight .kn,html[data-mode=dark] .highlight .kp,html[data-mode=dark] .highlight .kr,html[data-mode=dark] .highlight .kv,html:not([data-mode]) .highlight .k,html:not([data-mode]) .highlight .kn,html:not([data-mode]) .highlight .kp,html:not([data-mode]) .highlight .kr,html:not([data-mode]) .highlight .kv{color:#ff007a}
-html[data-mode=dark] .highlight .kd,html[data-mode=dark] .highlight .kt,html[data-mode=dark] .highlight .kc,html:not([data-mode]) .highlight .kd,html:not([data-mode]) .highlight .kt,html:not([data-mode]) .highlight .kc{color:#ff5ef1}
-html[data-mode=dark] .highlight .nf,html[data-mode=dark] .highlight .fm,html:not([data-mode]) .highlight .nf,html:not([data-mode]) .highlight .fm{color:#00ffcc}
-html[data-mode=dark] .highlight .s,html[data-mode=dark] .highlight .s1,html[data-mode=dark] .highlight .s2,html[data-mode=dark] .highlight .sb,html[data-mode=dark] .highlight .sc,html[data-mode=dark] .highlight .dl,html:not([data-mode]) .highlight .s,html:not([data-mode]) .highlight .s1,html:not([data-mode]) .highlight .s2,html:not([data-mode]) .highlight .sb,html:not([data-mode]) .highlight .sc,html:not([data-mode]) .highlight .dl{color:#ffe566}
-html[data-mode=dark] .highlight .c,html[data-mode=dark] .highlight .c1,html[data-mode=dark] .highlight .cm,html[data-mode=dark] .highlight .cs,html:not([data-mode]) .highlight .c,html:not([data-mode]) .highlight .c1,html:not([data-mode]) .highlight .cm,html:not([data-mode]) .highlight .cs{color:#2e6b5e}
-html[data-mode=dark] .highlight .m,html[data-mode=dark] .highlight .mi,html[data-mode=dark] .highlight .mf,html[data-mode=dark] .highlight .mh,html:not([data-mode]) .highlight .m,html:not([data-mode]) .highlight .mi,html:not([data-mode]) .highlight .mf,html:not([data-mode]) .highlight .mh{color:#00d4ff}
-html[data-mode=dark] .highlight .na,html[data-mode=dark] .highlight .nc,html[data-mode=dark] .highlight .nn,html[data-mode=dark] .highlight .no,html:not([data-mode]) .highlight .na,html:not([data-mode]) .highlight .nc,html:not([data-mode]) .highlight .nn,html:not([data-mode]) .highlight .no{color:#f7b731}
-
-/* Panel ao lado já no breakpoint lg (992px) em vez de xl (1200px) */
+/* ── Panel breakpoint fix ─────────────────────────────────── */
 @media (min-width:992px) and (max-width:1199px){
   #panel-wrapper{flex:0 0 auto;width:25%;display:block!important}
   main[aria-label="Main Content"]{flex:0 0 auto;width:75%}
