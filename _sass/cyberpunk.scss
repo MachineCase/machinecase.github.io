@@ -1,0 +1,93 @@
+/* ==========================================================
+   MachineCase — Cyberpunk Dark Theme Override
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+html[data-mode=dark],
+html:not([data-mode]) {
+  --main-bg: #06080f;
+  --mask-bg: rgba(6, 8, 15, 0.85);
+  --main-border-color: rgba(0, 255, 180, 0.12);
+  --text-color: #9de8d4;
+  --text-muted-color: #3d7a6e;
+  --text-muted-highlight-color: #5aa89a;
+  --heading-color: #00ffcc;
+  --label-color: #6abfb0;
+  --blockquote-border-color: rgba(0, 255, 180, 0.3);
+  --blockquote-text-color: #3d7a6e;
+  --link-color: #00d4ff;
+  --link-underline-color: rgba(0, 212, 255, 0.3);
+  --button-bg: #0a1020;
+  --btn-border-color: rgba(0, 255, 180, 0.25);
+  --btn-backtotop-color: #00ffcc;
+  --btn-backtotop-border-color: rgba(0, 255, 180, 0.25);
+  --card-header-bg: #0a1020;
+  --checkbox-color: rgba(0, 255, 180, 0.4);
+  --checkbox-checked-color: #00ffcc;
+  --img-bg: radial-gradient(circle, #06080f 0%, #0a1020 100%);
+  --shimmer-bg: linear-gradient(90deg, rgba(0,255,180,0) 0%, rgba(0,255,180,0.04) 50%, rgba(0,255,180,0) 100%);
+  --site-title-color: #00ffcc;
+  --site-subtitle-color: #3d7a6e;
+  --sidebar-bg: #040609;
+  --sidebar-border-color: rgba(0, 255, 180, 0.15);
+  --sidebar-muted-color: #3d7a6e;
+  --sidebar-active-color: #00ffcc;
+  --sidebar-hover-bg: rgba(0, 255, 180, 0.06);
+  --sidebar-btn-bg: #0a1020;
+  --sidebar-btn-color: rgba(0, 255, 180, 0.5);
+  --avatar-border-color: #00ffcc;
+  --topbar-bg: rgba(6, 8, 15, 0.88);
+  --topbar-text-color: #9de8d4;
+  --search-border-color: rgba(0, 255, 180, 0.25);
+  --search-icon-color: rgba(0, 255, 180, 0.4);
+  --input-focus-border-color: #00ffcc;
+  --post-list-text-color: #9de8d4;
+  --btn-patinator-text-color: #9de8d4;
+  --btn-paginator-hover-color: #0a1020;
+  --toc-highlight: #00ffcc;
+  --toc-popup-border-color: rgba(0, 255, 180, 0.25);
+  --tag-hover: rgba(0, 255, 180, 0.08);
+  --tb-odd-bg: #080c18;
+  --tb-even-bg: #06080f;
+  --tb-border-color: rgba(0, 255, 180, 0.1);
+  --footnote-target-bg: rgba(0, 255, 180, 0.08);
+  --btn-share-color: #3d7a6e;
+  --btn-share-hover-color: #00ffcc;
+  --card-bg: #0a1020;
+  --card-hovor-bg: #0f1830;
+  --card-shadow: rgba(0,255,180,0.07) 0 6px 18px 0, rgba(0,255,180,0.18) 0 0 0 1px;
+  --kbd-wrap-color: rgba(0, 255, 180, 0.3);
+  --kbd-text-color: #00ffcc;
+  --kbd-bg-color: #0a1020;
+  --prompt-text-color: rgba(157, 232, 212, 0.75);
+  --prompt-tip-bg: rgba(0, 255, 180, 0.06);
+  --prompt-tip-icon-color: #00ffcc;
+  --prompt-info-bg: rgba(0, 212, 255, 0.07);
+  --prompt-info-icon-color: #00d4ff;
+  --prompt-warning-bg: rgba(255, 204, 0, 0.07);
+  --prompt-warning-icon-color: #ffcc00;
+  --prompt-danger-bg: rgba(255, 0, 100, 0.07);
+  --prompt-danger-icon-color: #ff0064;
+  --tag-border: rgba(0, 255, 180, 0.25);
+  --tag-shadow: #040609;
+  --dash-color: rgba(0, 255, 180, 0.2);
+  --search-tag-bg: #0a1020;
+  --categories-border: rgba(0, 255, 180, 0.12);
+  --categories-hover-bg: #0f1830;
+  --categories-icon-hover-color: #00ffcc;
+  --timeline-node-bg: #00ffcc;
+  --timeline-color: rgba(0, 255, 180, 0.15);
+  --timeline-year-dot-color: #06080f;
+  --language-border-color: rgba(0, 255, 180, 0.15);
+  --highlight-bg-color: #050810;
+  --highlighter-rouge-color: #00ffcc;
+  --highlight-lineno-color: #1a3830;
+  --inline-code-bg: rgba(0, 255, 180, 0.07);
+  --code-color: #00e8b4;
+  --code-header-text-color: rgba(0, 255, 180, 0.45);
+  --code-header-muted-color: #0f1830;
+  --code-header-icon-color: rgba(0, 255, 180, 0.3);
+  --clipboard-checked-color: #00ffcc;
+  --filepath-text-color: #00d4ff;
+}
