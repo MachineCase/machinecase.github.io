@@ -84,4 +84,10 @@ html[data-mode=dark] .highlight .s,html[data-mode=dark] .highlight .s1,html[data
 html[data-mode=dark] .highlight .c,html[data-mode=dark] .highlight .c1,html[data-mode=dark] .highlight .cm,html[data-mode=dark] .highlight .cs,html:not([data-mode]) .highlight .c,html:not([data-mode]) .highlight .c1,html:not([data-mode]) .highlight .cm,html:not([data-mode]) .highlight .cs{color:#2e6b5e}
 html[data-mode=dark] .highlight .m,html[data-mode=dark] .highlight .mi,html[data-mode=dark] .highlight .mf,html[data-mode=dark] .highlight .mh,html:not([data-mode]) .highlight .m,html:not([data-mode]) .highlight .mi,html:not([data-mode]) .highlight .mf,html:not([data-mode]) .highlight .mh{color:#00d4ff}
 html[data-mode=dark] .highlight .na,html[data-mode=dark] .highlight .nc,html[data-mode=dark] .highlight .nn,html[data-mode=dark] .highlight .no,html:not([data-mode]) .highlight .na,html:not([data-mode]) .highlight .nc,html:not([data-mode]) .highlight .nn,html:not([data-mode]) .highlight .no{color:#f7b731}
+
+/* Panel ao lado já no breakpoint lg (992px) em vez de xl (1200px) */
+@media (min-width:992px) and (max-width:1199px){
+  #panel-wrapper{flex:0 0 auto;width:25%;display:block!important}
+  main[aria-label="Main Content"]{flex:0 0 auto;width:75%}
+}
 </style>
