@@ -22,6 +22,8 @@ What you found is a standalone Dart executable produced by `dart compile exe`, n
 
 In November 2024, Jamf Threat Labs documented DPRK-linked malware built with Flutter for macOS. The malicious code was hidden inside a Dart dylib, invisible to standard analysis tools by design. That case involved Flutter applications, where blutter works, but this post covers a different and more opaque case: standalone executables produced by `dart compile exe` with no Flutter framework, no app bundle, no visible dylib, just a single binary where the app code is embedded as opaque data inside an `LC_NOTE` with no public analysis method to extract it.
 
+> **Scope:** All analysis in this post was performed on Dart 3.11.4 standalone AOT binaries compiled for macOS ARM64. The extraction method and blutter patches are specific to this format. Flutter applications on Android and iOS use a different layout and are already supported by upstream blutter without modifications.
+
 This is where existing tools stop working, because blutter, the go-to tool for Dart AOT reverse engineering, supports Android `libapp.so` and iOS `App.framework` but has no support for this format.
 
 This post documents how to get blutter working on standalone Dart AOT binaries on macOS, including the binary format, the extraction method, the necessary patches, and the complete analysis workflow.
@@ -221,6 +223,8 @@ The patch fixes the default for macOS:
 self.has_compressed_ptrs = os_name not in ('ios', 'macos')
 ```
 
+> **Note:** The `no-compressed-pointers` behavior is specific to `dart compile exe` standalone binaries on macOS. Flutter applications compiled for Android use compressed pointers by default. This patch should not affect Android or iOS builds.
+
 **Patch 3: blutter/src/ElfHelper.cpp**
 
 Two bugs in this file.
@@ -351,7 +355,18 @@ The object pool contains all program constants including strings, numbers, and c
 grep "String:" blutter_out/pp.txt | grep -v "dart:"
 ```
 
-Any C2 URLs, LaunchAgent paths, or hardcoded keys that exist in the Dart code will appear here in plaintext.
+Here is a real excerpt from the `pp.txt` of the binary analyzed in this post, showing how the app's strings appear alongside Dart stdlib constants:
+
+```
+[pp+0x1748] String: "function result"
+[pp+0x1750] String: " é par"
+[pp+0x1758] String: " é impar"
+[pp+0x1760] String: ": "
+[pp+0x1768] String: " ("
+[pp+0x1770] String: ")"
+```
+
+The strings at `pp+0x1750` and `pp+0x1758` are the app's own strings, recognizable because they are surrounded by generic runtime constants. Any C2 URLs, LaunchAgent paths, or hardcoded keys that exist in the Dart code will appear here in plaintext alongside similar stdlib noise.
 
 **blutter_frida.js: dynamic analysis**
 
