@@ -3,6 +3,7 @@ title: "Reversing dart compile exe on macOS: Bringing blutter to Dart Standalone
 date: 2026-05-24 05:27:00 -0300
 categories: [Malware Analysis, Security Research]
 tags: [Dart, AOT, Reverse Engineering, blutter, macOS, Mach-O, LC_NOTE, Reflective Loading, MITRE]
+image: "https://blog.unidoll.com.br/wp-content/uploads/2019/10/boneca-russa-capa.jpg"
 ---
 
 ## The problem
