@@ -453,6 +453,54 @@ The most important point is that `dart compile exe` implements this inadvertentl
 
 ---
 
+
+## Hunting and triage
+
+Identifying `dart compile exe` binaries in the wild requires different indicators than those used for Flutter applications, because the two formats have a fundamentally different Mach-O structure.
+
+**Static indicators**
+
+The most reliable indicator is the `LC_NOTE` load command with the name `__dart_app_snap`, which unlike strings that may vary between Dart versions is hardcoded in the Dart VM and does not change across releases, meaning any tool that parses Mach-O load commands will find it:
+
+```bash
+otool -l ./binary | grep "__dart_app_snap"
+```
+
+The four snapshot symbols exported from the outer binary serve as a secondary indicator, and a `dart compile exe` binary will always export all four while a Flutter macOS application exports none from the outer binary because they live inside `App.framework`:
+
+```bash
+nm ./binary | grep -E "kDartVmSnapshot|kDartIsolateSnapshot"
+```
+
+**Differentiating from Flutter**
+
+The fastest structural check is the presence or absence of a Flutter framework dependency, because `dart compile exe` binaries have no reference to FlutterMacOS.framework while Flutter macOS apps always do:
+
+```bash
+# dart compile exe — no Flutter framework dependency
+otool -L ./binary | grep -i flutter
+# returns empty
+
+# Flutter macOS app — references FlutterMacOS.framework
+otool -L ./app | grep -i flutter
+# /path/to/FlutterMacOS.framework/Versions/A/FlutterMacOS
+```
+
+If `otool -L` returns no Flutter reference and the four snapshot symbols are present, the binary is a standalone `dart compile exe` executable.
+
+**Triage workflow**
+
+Once a candidate is identified, the object pool dump produced by blutter is sufficient for a first-pass triage without requiring full assembly analysis, because running `extract_snapshot.py` followed by a grep on the string entries of `pp.txt` surfaces the app's own strings directly from the inner Mach-O:
+
+```bash
+python3 extract_snapshot.py ./binary /tmp/analysis/
+grep "String:" /tmp/analysis/blutter_out/pp.txt | grep -v "dart:"
+```
+
+C2 URLs, filesystem paths, and hardcoded values will appear here in plaintext, and because this is purely static analysis of the inner Mach-O it is not affected by anti-sandbox techniques that suppress dynamic behavior, so full blutter analysis and assembly review are reserved for samples where the object pool triage reveals suspicious content or where sandbox behavioral analysis is inconclusive.
+
+---
+
 ## Conclusion
 
 Before this work, `dart compile exe` binaries on macOS represented a blind spot where the app code is hidden inside an `LC_NOTE` as opaque data that no conventional analysis tool can see, and blutter, the only tool capable of recovering symbols from a Dart snapshot, had no support for this format.
