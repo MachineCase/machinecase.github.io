@@ -415,44 +415,7 @@ You can now navigate to `main()` by name, see cross-references, and analyze the 
 
 ## The inadvertent evasion primitive
 
-During the analysis of the `dart compile exe` format it became clear that the mechanism Dart uses to load the inner Mach-O is not merely a format curiosity but is functionally equivalent to a malware evasion technique documented in MITRE ATT&CK.
-
-To understand why, consider what the Dart VM actually does at runtime with the inner Mach-O.
-
-When the executable starts, the Dart VM reads the `LC_NOTE`, finds the offset and size of the inner Mach-O, and loads it into memory using `mmap` with `MAP_JIT`, without calling `dlopen` or touching any dyld API. It maps the segments manually, resolves the four snapshot symbols internally, and registers the `IsolateSnapshotInstructions` address as the Dart isolate entry point.
-
-The result is that your Dart app code executes in an anonymous memory region that:
-
-- Does not appear in `otool -L` of the process
-- Does not appear in `vmmap` with an associated name
-- Is not registered by the dyld
-- Does not generate events in macOS Endpoint Security
-- Is not visible to Frida's `Process.enumerateModules()`
-
-To verify this in practice, you can reproduce the mechanism from scratch. The experiment combines three primitives.
-
-**First primitive: LC_NOTE as container**
-
-A Mach-O payload is embedded inside the executable as opaque data in an `LC_NOTE`, which is neither an `LC_SEGMENT_64` nor an `LC_LOAD_DYLIB`, so the dyld ignores it completely and static analysis tools that inspect segments and dependencies see nothing.
-
-**Second primitive: MAP_JIT for execution**
-
-The payload is extracted at runtime and mapped into executable memory with `mmap MAP_JIT` without requiring any entitlement, without involving the dyld, and without registering in any system structure, so the code executes in a completely anonymous memory region.
-
-**Third primitive: direct syscall in the payload**
-
-The payload executes actions via `svc #0x80` directly without going through libc, bypassing EDRs that instrument functions at the libc level. Process execution events remain visible to kernel-level monitoring via Endpoint Security.
-
-The combination of the three, called **LC_NOTE Reflective Execution (LRE)**, produces an executable that loads and executes arbitrary code without leaving any trace visible to static analysis or runtime module enumeration. The code loading phase generates no dyld events, no module registration, and no Endpoint Security load events, making the payload's presence undetectable until it acts.
-
-As of the writing of this post, no public documentation was found combining these three primitives into a single macOS artifact. The three primitives exist separately in the security literature, but their specific integration here has not been previously described.
-
-In MITRE ATT&CK the mechanism fits under **T1620: Reflective Code Loading**, a technique that has existed since 2021 and lists macOS as a platform but has no sub-techniques and no procedure examples for macOS, making LRE a natural candidate for the first macOS sub-technique of T1620.
-
-The most important point is that `dart compile exe` implements this inadvertently as a consequence of the distribution format, not as an intentional evasion choice, meaning any malware written in Dart and compiled with `dart compile exe` gets LRE for free without the author needing to know it exists.
-
----
-
+During the analysis of the `dart compile exe` format something unexpected emerged: the mechanism Dart uses to load the inner Mach-O at runtime has properties that are functionally equivalent to a documented malware evasion technique. The second post in this series will cover this in depth.
 
 ## Hunting and triage
 
