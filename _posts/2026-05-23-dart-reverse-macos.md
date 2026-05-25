@@ -413,10 +413,6 @@ You can now navigate to `main()` by name, see cross-references, and analyze the 
 
 ---
 
-## The inadvertent evasion primitive
-
-During the analysis of the `dart compile exe` format something unexpected emerged: the mechanism Dart uses to load the inner Mach-O at runtime has properties that are functionally equivalent to a documented malware evasion technique. The second post in this series will cover this in depth.
-
 ## Hunting and triage
 
 Identifying `dart compile exe` binaries in the wild requires different indicators than those used for Flutter applications, because the two formats have a fundamentally different Mach-O structure.
@@ -477,11 +473,7 @@ This post documents the first public method for complete analysis of `dart compi
 
 The `blutter-macos` repository contains all scripts and patches needed to reproduce the method on any `dart compile exe` binary.
 
-During the format analysis a side effect became evident: the mechanism Dart uses to load the inner Mach-O is functionally equivalent to an undocumented evasion technique. The combination of LC_NOTE as an opaque container, MAP_JIT for execution without dyld, and direct syscall in the payload produces an artifact where the code loading phase is invisible to static analysis and runtime module enumeration. The full implications for detection and incident response will be explored in the second post.
-
-This combination, **LC_NOTE Reflective Execution (LRE)**, is not documented in any public article or tool and is a candidate for the first macOS sub-technique of T1620 in MITRE ATT&CK.
-
-The second post in this series will explore LRE in depth, covering the complete PoC, the comparison with existing techniques, and the implications for detection and incident response.
+During the format analysis something unexpected emerged: the mechanism Dart uses to load the inner Mach-O at runtime has properties that are functionally equivalent to a documented malware evasion technique. The second post in this series will cover this in depth.
 
 ---
 
