@@ -441,9 +441,9 @@ The payload is extracted at runtime and mapped into executable memory with `mmap
 
 **Third primitive: direct syscall in the payload**
 
-The payload executes actions via `svc #0x80` directly without going through libc, so EDRs that instrument functions like `execve()` at the libc level do not capture the execution.
+The payload executes actions via `svc #0x80` directly without going through libc, bypassing EDRs that instrument functions at the libc level. Process execution events remain visible to kernel-level monitoring via Endpoint Security.
 
-The combination of the three, called **LC_NOTE Reflective Execution (LRE)**, produces an executable that loads and executes arbitrary code without leaving any trace visible to static analysis, runtime module enumeration, or EDR hooks in userspace.
+The combination of the three, called **LC_NOTE Reflective Execution (LRE)**, produces an executable that loads and executes arbitrary code without leaving any trace visible to static analysis or runtime module enumeration. The code loading phase generates no dyld events, no module registration, and no Endpoint Security load events, making the payload's presence undetectable until it acts.
 
 As of the writing of this post, no public documentation was found combining these three primitives into a single macOS artifact. The three primitives exist separately in the security literature, but their specific integration here has not been previously described.
 
