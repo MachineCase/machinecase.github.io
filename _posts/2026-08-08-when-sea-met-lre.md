@@ -227,12 +227,6 @@ First, Apple's structural validation is real: `codesign` rejects binaries with d
 
 ---
 
-## Why This Matters
-
-I am a vulnerability researcher, and my job is to find what breaks and explain why. I found that SEA breaks in a documented, fingerprintable way, the `NODE_SEA_BLOB` wrapper, and that `LC_NOTE` (with `cmd = 0x31`) can carry the same payload without SEA's fingerprints, and the PoCs demonstrate the spectrum, from fully detectable (SEA) to invisible at the string layer (Capability Cloaking). The game doesn't end, it moves to a different layer.
-
----
-
 ## Repository
 
 Full source for all PoCs at **[github.com/machinecase/lre-injector](https://github.com/machinecase/lre-injector)**, including stub loaders, the LC_NOTE injector, payload generators, the QuickJS bundle build, the native Mach-O loader with chained fixups support, and the direct symbol resolver prototype.
